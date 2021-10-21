@@ -4,7 +4,7 @@
 
 void readImgFile(char *path, unsigned char *arr){
     FILE *fp = fopen(path, "rb");
-    fread(arr, 10240, 1, fp);
+    fread(arr, 10240, 1, fp);  // サイズ512の画像*20
     fclose(fp);
 }
 
@@ -26,8 +26,9 @@ void printCharAsBinary(unsigned char img_byte){
 
 
 void printImgArr(unsigned char *arr, int index){
+    // 画像サイズは64*64
     for(int i = index*64; i < (index+1)*64; i++){
-        for(int j = 0; j < 8; j++){
+        for(int j = 0; j < 8; j++){  // charは1byte(=8bit)なのでループは8回でいい(8*8char = 64bit)
             printCharAsBinary(arr[i*8 + j]);
         }
         printf("\n");
@@ -43,17 +44,17 @@ int main(){
     int file_num;
     printf("type file number: ");
     scanf("%d", &file_num);
-    (void)getchar();
+    (void)getchar();  // 後々のgetsのためにscanfで拾えなかった改行を吸っておく
 
     // imgファイルへのpathを加工
     char *path[256];
     sprintf(path, "./samples/%02d.img", file_num);
 
     // imgファイルのバイナリを読み込む
+    printf("path: %s\n", path);
     readImgFile(path, arr);
 
     // 文字画像を20個表示
-    printf("path: %s\n", path);
     for(int i = 0; i < 20; i++){
         printImgArr(arr, i);
         if(i < 19){
