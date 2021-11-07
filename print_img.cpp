@@ -63,7 +63,7 @@ int main(){
     // file pathの加工
     ios::fmtflags current_flag = std::cout.flags();
     ostringstream oss;
-    oss << "./images/" << setw(2) << setfill('0') << n << ".img";
+    oss << "./samples/" << setw(2) << setfill('0') << n << ".img";
     string file_path = oss.str();
     cout.flags(current_flag);
 
