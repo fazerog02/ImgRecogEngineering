@@ -155,7 +155,7 @@ int main(){
     // file pathの加工
     ios::fmtflags current_flag = std::cout.flags();  // 現在のcoutの設定を保管
     ostringstream oss;
-    oss << "./images/" << setw(2) << setfill('0') << n << ".img";  // 2桁の0埋め
+    oss << "./samples/" << setw(2) << setfill('0') << n << ".img";  // 2桁の0埋め
     string file_path = oss.str();
     cout.flags(current_flag);  // coutの設定を戻す
 
