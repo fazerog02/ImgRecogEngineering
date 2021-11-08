@@ -42,7 +42,7 @@ vector<unsigned char> readImgFile(string const& file_path){
 
     vector<unsigned char> data(size);
     ifs.read(reinterpret_cast<char *>(&data[0]), size);
-    
+
     return data;
 }
 
@@ -186,3 +186,70 @@ int main(){
 
     return 0;
 }
+
+/*
+oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooooooo**oooooooooooooooooooooooooooooooooooo
+ooooooooooooooooooooooooo*o*oooooo**oooooooooooooooooooooooooooo
+ooooooooooooooooooooooooo*oo*ooo**oo*ooooooooooooooooooooooooooo
+oooooooooooooooooooooooo*oooo***ooooo*oooooooooooooooooooooooooo
+ooooooooooooooooooooo***oooooooooooo*ooooooooooooooooooooooooooo
+oooooooooooooooo*****ooooooooooo****oooooooooooooooooooooooooooo
+ooooooooooooo***ooooooooooooo***oooooooooooooooooooooooooooooooo
+oooooooooooo*ooooooo**ooooo**ooooooooooooooooooooooooooooooooooo
+oooooooooooo*ooo****oo*ooo*ooooooooooooooooooooooooooooooooooooo
+ooooooooooooo***oooooo*oo*oooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooo*oo*oooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooo*oo*oooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooo*o*ooooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooo*o*ooooooooooooooooooooooooooooooooooooooo
+ooooooooooooooooooooo*oo*ooooooooooooooooooooooooooooooooooooooo
+ooooooooooooooooooooo*oo*ooooooooooooooooooooooooooooooooooooooo
+ooooooooooooooooooooo*oo*ooooooooooooooooooooooooooooooooooooooo
+ooooooooooooooooooooo*oo*oooooooo*oooooooooooooooooooooooooooooo
+oooooooooooooooooooo*ooo*ooooooo*o*ooooooooooooooooooooooooooooo
+oooooooooooooooooooo*oo*oooooooo*o*ooooooooooooooooooooooooooooo
+oooooooooooooooooooo*oo*ooooooo*oo*ooooooooooooooooooooooooooooo
+oooooooooooooooooooo*oo*ooooooo*ooo******ooooooooooooooooooooooo
+oooooooooooooooooooo*oo*oooooo*oooooooooo****ooooooooooooooooooo
+oooooooooooooooooooo*oo*ooooo*ooooooooooooooo*oooooooooooooooooo
+oooooooooooooooooooo*oo*oo***ooooooooooooooooo*ooooooooooooooooo
+oooooooooooooooooooo*ooo**ooooooo***********ooo*oooooooooooooooo
+ooooooooooooooooooooo*oooooooooo*ooooooooooo*oo*oooooooooooooooo
+ooooooooooooooooooooo*ooooooooo*ooooooooooooo*oo*ooooooooooooooo
+oooooooooooooooooooo*ooooooooo*ooooooooooooooo*oo*oooooooooooooo
+oooooooooooooooooooo*ooooooooo*ooooooooooooooo*oo*oooooooooooooo
+oooooooooooooooooo**ooooooooo*oooooooooooooooo*oo*oooooooooooooo
+oooooooooooooooooo*ooooooooo*oooooooooooooooooo*oo*ooooooooooooo
+ooooooooooooooooo*oooo*ooooo*oooooooooooooooooo*oo*ooooooooooooo
+oooooooooooooooo*oooo*o*ooo*ooooooooooooooooooo*oo*ooooooooooooo
+ooooooooooooooo*oooo*oo*ooo*ooooooooooooooooooo*oo*ooooooooooooo
+ooooooooooooooo*ooo*ooo*ooo*ooooooooooooooooooo*oo*ooooooooooooo
+oooooooooooooo*oooo*oo*ooooo*oooooooooooooooooo*oo*ooooooooooooo
+oooooooooooooo*ooo*ooo*oooooo*oooooooooooooooo*oo*oooooooooooooo
+oooooooooooooo*oo*ooo*ooo**ooo**oooooooooooooo*oo*oooooooooooooo
+oooooooooooooo*oo*oo*ooo*oo*oooo*oooooooooooo*ooo*oooooooooooooo
+oooooooooooooo*ooo**ooo*oooo*oooo*ooooooooooo*oo*ooooooooooooooo
+oooooooooooooo*oooooooo*ooooo**oo*oooooooooo*ooo*ooooooooooooooo
+oooooooooooooo*oooooo**oooooooo**ooooooooooo*oo*oooooooooooooooo
+ooooooooooooooo*oooo*oooooooooooooooooooooo*ooo*oooooooooooooooo
+oooooooooooooooo****oooooooooooooooooooooo*ooo*ooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooooooo*ooo*ooooooooooooooooo
+ooooooooooooooooooooooooooooooooooooooooo*ooo*oooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooooo*ooo*ooooooooooooooooooo
+ooooooooooooooooooooooooooooooooooooooo*ooo*oooooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooo*ooo*ooooooooooooooooooooo
+ooooooooooooooooooooooooooooooooooooo*ooo*oooooooooooooooooooooo
+oooooooooooooooooooooooooooooooooooo*oo**ooooooooooooooooooooooo
+ooooooooooooooooooooooooooooooooooo*o**ooooooooooooooooooooooooo
+ooooooooooooooooooooooooooooooooooo**ooooooooooooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+*/
