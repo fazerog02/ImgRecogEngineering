@@ -10,6 +10,16 @@ using namespace std;
 
 #define IMG_FILE_SIZE_BYTE 512
 #define IMG_NUM 20
+#define MIN_BLOCK_SIZE 6
+
+
+// 方向線素特徴量. (Directional Element Feature:DEF)
+struct Def {
+    int horizontal;
+    int vertical;
+    int upper_right;
+    int lower_right;
+};
 
 
 void printImg(vector<vector<char>> const& img){
@@ -24,6 +34,16 @@ void printImg(vector<vector<char>> const& img){
         cout << endl;
     }
     cout << endl;
+}
+
+
+void printDef(Def& def) {
+    cout << "{";
+    cout << "hor: " << def.horizontal << ", ";
+    cout << "ver: " << def.vertical << ", ";
+    cout << "upr: " << def.upper_right << ", ";
+    cout << "lowr: " << def.lower_right;
+    cout << "}" << endl;
 }
 
 
@@ -287,33 +307,29 @@ void removeImgNoise(vector<vector<char>>& img) {
            false
        )
     );
-
     vector<pair<int, int>> positions;
-
-    int c = 1;
-    vector<vector<char>> new_img(
-        row_size,
-        vector<char>(
-            col_size,
-            '.'
-        )
-    );
 
     for(int row = 0; row < row_size; row++){
         for(int col = 0; col < col_size; col++){
-            // 黒画素が見つかったらそこから掘っていって塊を見つける
+            // 黒画素が見つかったらそこから再帰で掘っていって塊を見つける
             if(img[row][col] == '*' && !flags[row][col]) {
                 positions.clear();
                 getBlockPositions(img, flags, positions, make_pair(row, col));
 
-                for(int i = 0; i < positions.size(); i++){
-                    new_img[positions[i].first][positions[i].second] = c + '0';
+                // 塊の黒画素が5個以下だったら削除
+                if(positions.size() < MIN_BLOCK_SIZE){
+                    for(int i = 0; i < positions.size(); i++){
+                        img[positions[i].first][positions[i].second] = 'o';
+                    }
                 }
-                c++;
             }
         }
     }
-    printImg(new_img);
+}
+
+
+Def extractImgDef(vector<vector<char>>& img) {
+
 }
 
 
@@ -348,6 +364,7 @@ int main(){
             )
         )
     );
+    vector<Def> def_list;
     for(int i = 0; i < IMG_NUM; i++){
         images[i] = getImgFromImgRawArr(img_raw_arr, i);
         removeImgNoise(images[i]);
@@ -355,7 +372,7 @@ int main(){
         extractImgOutline(images[i]);
     }
 
-    // for(int i = 0; i < IMG_NUM; i++) printImg(images[i]);
+    for(int i = 0; i < IMG_NUM; i++) printImg(images[i]);
 
     return 0;
 }
