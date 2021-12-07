@@ -11,6 +11,7 @@ using namespace std;
 #define IMG_FILE_SIZE_BYTE 512
 #define IMG_NUM 20
 #define MIN_BLOCK_SIZE 6
+#define DEF_DIVIDE_BLOCK_SIZE 8
 
 
 // 方向線素特徴量. (Directional Element Feature:DEF)
@@ -43,7 +44,7 @@ void printDef(Def& def) {
     cout << "ver: " << def.vertical << ", ";
     cout << "upr: " << def.upper_right << ", ";
     cout << "lowr: " << def.lower_right;
-    cout << "}" << endl;
+    cout << "}";
 }
 
 
@@ -328,8 +329,48 @@ void removeImgNoise(vector<vector<char>>& img) {
 }
 
 
-Def extractImgDef(vector<vector<char>>& img) {
+vector<vector<Def>> extractImgDef(vector<vector<char>>& img) {
+    const int i_limit = img.size()/DEF_DIVIDE_BLOCK_SIZE-1;
+    const int j_limit = img[0].size()/DEF_DIVIDE_BLOCK_SIZE-1;
+    vector<vector<Def>> def(
+        i_limit,
+        vector<Def>(
+            j_limit,
+            {0, 0, 0, 0}
+        )
+    );
 
+    for(int i = 0; i < i_limit; i++){
+        for(int j = 0; j < j_limit; j++){
+            int row_zero = i * img.size()/DEF_DIVIDE_BLOCK_SIZE;
+            int col_zero = j * img[0].size()/DEF_DIVIDE_BLOCK_SIZE;
+            for(int row = row_zero; row < row_zero + img.size()/DEF_DIVIDE_BLOCK_SIZE*2; row++){
+                for(int col = col_zero; col < col_zero + img[0].size()/DEF_DIVIDE_BLOCK_SIZE*2; col++){
+                    // 重み計算
+                    int value = static_cast<int>(
+                        min(
+                            5 - abs(3.5 - static_cast<int>((row-row_zero)/2)),
+                            5 - abs(3.5 - static_cast<int>((col-col_zero)/2))
+                        )
+                    );
+                    // 右肩下がり
+                    if(row - 1 >= 0 && col - 1 >= 0 && img[row-1][col-1] == '*') def[i][j].lower_right += value;
+                    if(row + 1 < img.size() && col + 1 < img[0].size() && img[row+1][col+1] == '*') def[i][j].lower_right += value;
+                    // 右肩上がり
+                    if(row - 1 >= 0 && col + 1 < img[0].size() && img[row-1][col+1] == '*') def[i][j].upper_right += value;
+                    if(row + 1 < img.size() && col - 1 >= 0 && img[row+1][col-1] == '*') def[i][j].upper_right += value;
+                    // 垂直
+                    if(row - 1 >= 0 && img[row-1][col] == '*') def[i][j].vertical += value;
+                    if(row + 1 < img.size() && img[row+1][col] == '*') def[i][j].vertical += value;
+                    // 水平
+                    if(col + 1 < img[0].size() && img[row][col+1] == '*') def[i][j].horizontal += value;
+                    if(col - 1 >= 0 && img[row][col-1] == '*') def[i][j].horizontal += value;
+                }
+            }
+        }
+    }
+
+    return def;
 }
 
 
@@ -364,15 +405,27 @@ int main(){
             )
         )
     );
-    vector<Def> def_list;
+    vector<vector<vector<Def>>> def_list;
+
     for(int i = 0; i < IMG_NUM; i++){
         images[i] = getImgFromImgRawArr(img_raw_arr, i);
         removeImgNoise(images[i]);
         normalizeImg(images[i]);
         extractImgOutline(images[i]);
+        def_list.push_back(extractImgDef(images[i]));
     }
 
-    for(int i = 0; i < IMG_NUM; i++) printImg(images[i]);
+    for(int i = 0; i < IMG_NUM; i++){
+        printImg(images[i]);
+        for(int j = 0; j < def_list[i].size(); j++){
+            for(int k = 0; k < def_list[i][0].size(); k++){
+                printDef(def_list[i][j][k]);
+                cout << " ";
+            }
+            cout << endl;
+        }
+    }
+
 
     return 0;
 }
