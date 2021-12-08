@@ -429,3 +429,16 @@ int main(){
 
     return 0;
 }
+
+
+/*
+
+{hor: 53, ver: 45, upr: 49, lowr: 51} {hor: 102, ver: 95, upr: 102, lowr: 99} {hor: 98, ver: 104, upr: 97, lowr: 99} {hor: 145, ver: 148, upr: 139, lowr: 135} {hor: 86, ver: 82, upr: 81, lowr: 83} {hor: 4, ver: 0, upr: 4, lowr: 4} {hor: 0, ver: 0, upr: 0, lowr: 0}
+{hor: 146, ver: 153, upr: 154, lowr: 151} {hor: 107, ver: 99, upr: 105, lowr: 107} {hor: 105, ver: 103, upr: 108, lowr: 103} {hor: 59, ver: 74, upr: 67, lowr: 70} {hor: 30, ver: 42, upr: 41, lowr: 43} {hor: 6, ver: 6, upr: 7, lowr: 7} {hor: 0, ver: 0, upr: 0, lowr: 0}
+{hor: 62, ver: 58, upr: 54, lowr: 54} {hor: 133, ver: 118, upr: 131, lowr: 131} {hor: 113, ver: 103, upr: 107, lowr: 106} {hor: 85, ver: 86, upr: 80, lowr: 83} {hor: 115, ver: 113, upr: 109, lowr: 116} {hor: 67, ver: 70, upr: 67, lowr: 69} {hor: 30, ver: 26, upr: 28, lowr: 24}
+{hor: 25, ver: 21, upr: 23, lowr: 24} {hor: 102, ver: 96, upr: 101, lowr: 99} {hor: 86, ver: 87, upr: 86, lowr: 88} {hor: 89, ver: 89, upr: 88, lowr: 90} {hor: 113, ver: 116, upr: 113, lowr: 112} {hor: 158, ver: 159, upr: 153, lowr: 156} {hor: 120, ver: 121, upr: 120, lowr: 121}
+{hor: 92, ver: 93, upr: 95, lowr: 95} {hor: 117, ver: 118, upr: 114, lowr: 122} {hor: 47, ver: 58, upr: 53, lowr: 55} {hor: 80, ver: 81, upr: 84, lowr: 84} {hor: 66, ver: 72, upr: 72, lowr: 67} {hor: 50, ver: 61, upr: 54, lowr: 54} {hor: 110, ver: 114, upr: 111, lowr: 114}
+{hor: 134, ver: 131, upr: 135, lowr: 138} {hor: 145, ver: 143, upr: 149, lowr: 149} {hor: 108, ver: 109, upr: 103, lowr: 109} {hor: 104, ver: 108, upr: 109, lowr: 107} {hor: 33, ver: 39, upr: 37, lowr: 36} {hor: 50, ver: 49, upr: 48, lowr: 50} {hor: 141, ver: 148, upr: 141, lowr: 136}
+{hor: 159, ver: 158, upr: 159, lowr: 163} {hor: 155, ver: 153, upr: 157, lowr: 158} {hor: 115, ver: 111, upr: 115, lowr: 110} {hor: 112, ver: 111, upr: 112, lowr: 111} {hor: 48, ver: 48, upr: 46, lowr: 49} {hor: 125, ver: 120, upr: 125, lowr: 123} {hor: 149, ver: 154, upr: 149, lowr: 142}
+
+*/
