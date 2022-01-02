@@ -60,6 +60,32 @@ vector<vector<vector<double>>> readCovFile(string const& file_name) {
 }
 
 
+void dumpEigen(string const file_name, Eigen const& eigen) {
+    ofstream file_stream;
+    file_stream.open(file_name, ios_base::out);
+
+    // values書き込み
+    int values_size = eigen.values.size();
+    for(int i = 0; i < values_size; i++) {
+        file_stream << eigen.values[i];
+        if(i < values_size-1) file_stream << ",";
+    }
+    file_stream << endl;
+
+    // vectors書き込み
+    int vectors_size = eigen.vectors.size();
+    int vector_size;
+    for(int i = 0; i < vectors_size; i++) {
+        vector_size = eigen.vectors[i].size();
+        for(int j = 0; j < vector_size; j++) {
+            file_stream << eigen.vectors[i][j];
+            if(j < vector_size-1) file_stream << ",";
+        }
+        if(i < values_size-1) file_stream << endl;
+    }
+}
+
+
 pair<int, int> getMaxValuePosition(vector<vector<double>> const& cov) {
     pair<int, int> max_value_position = make_pair(0, 1);  // (y, x)
     for(int i = 0; i < cov.size(); i++) {
@@ -145,14 +171,6 @@ Eigen getEigenByJacobi(vector<vector<double>>& cov) {
             }
         }
 
-        // cout << endl << "##########" << endl;
-        // cout << "theta: " << theta << endl;
-        // cout << "(" << i << "," << j << ")" << endl;
-        // cout << "----- rotate matrix -----" << endl;
-        // print2DimVec(new_p);
-        // cout << "-------------------------" << endl;
-        // print2DimVec(cov);
-
         cov_copy = cov;
         for(int row = 0; row < cov.size(); row++) {
             cov[row][i] = 0;
@@ -186,35 +204,25 @@ Eigen getEigenByJacobi(vector<vector<double>>& cov) {
             }
         }
 
-
-        // cout << "----------" << endl;
-        // print2DimVec(cov);
-        // cout << cov[max_pos.second][max_pos.first] << endl;
-
         counter++;
     }
 
-    cout << "###values###" << endl;
     vector<double> values;
     for(int row = 0; row < cov.size(); row++) {
         for(int col = 0; col < cov[0].size(); col++) {
             if(row == col) {
                 values.push_back(cov[row][col]);
-                cout << cov[row][col] << endl;
             }
         }
     }
 
-    cout << endl << "###vectors###" << endl;
     counter = 0;
     vector<vector<double>> vectors;
     for(int col = 0; col < p_sum[0].size(); col++) {
         vectors.push_back(vector<double>());
         for(int row = 0; row < p_sum.size(); row++) {
             vectors[counter].push_back(p_sum[row][col]);
-            cout << p_sum[row][col] << " ";
         }
-        cout << endl;
         counter++;
     }
 
@@ -233,37 +241,13 @@ int main() {
 
     vector<vector<vector<double>>> cov_of_each_chars = readCovFile(file_name);
 
-    // vector<vector<double>> a(
-    //     4,
-    //     vector<double>(
-    //         4,
-    //         0
-    //     )
-    // );
-    // a[0][0] = 1;
-    // a[0][1] = 2;
-    // a[0][2] = 3;
-    // a[0][3] = 4;
-
-    // a[1][0] = 2;
-    // a[1][1] = 5;
-    // a[1][2] = 4;
-    // a[1][3] = 0;
-
-    // a[2][0] = 3;
-    // a[2][1] = 4;
-    // a[2][2] = 1;
-    // a[2][3] = 1;
-
-    // a[3][0] = 4;
-    // a[3][1] = 0;
-    // a[3][2] = 1;
-    // a[3][3] = 2;
-
-    // getEigenByJacobi(a);
-
     vector<Eigen> eigen_list;
-    for(int i = 0; i < 1; i++) {
+    for(int i = 0; i < CHAR_NUM; i++) {
         eigen_list.push_back(getEigenByJacobi(cov_of_each_chars[i]));
+    }
+
+    for(int i = 0; i < eigen_list.size(); i++) {
+        file_name = "eigens/" + to_string(i) + ".txt";
+        dumpEigen(file_name, eigen_list[i]);
     }
 }
