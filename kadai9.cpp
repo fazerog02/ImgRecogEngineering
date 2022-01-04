@@ -11,8 +11,6 @@ using namespace std;
 #define CHAR_NUM 46
 #define FILE_DATA_NUM 20
 #define COV_MATRIX_DIMENSION 196
-#define BIAS 1.0
-
 
 struct Eigen {
     vector<double> values;
@@ -147,15 +145,12 @@ vector<vector<vector<double>>> readTests() {
 }
 
 
-vector<double> subVector(vector<double> const& a, vector<double> const& b) {
-    if(a.size() != b.size()) return vector<double>();
+void subVector(vector<double> const& a, vector<double> const& b, vector<double>& ans) {
+    if(a.size() != b.size()) return;
 
-    vector<double> ans;
     for(int i = 0; i < a.size(); i++) {
-        ans.push_back(a[i] - b[i]);
+        ans[i] = a[i] - b[i];
     }
-
-    return ans;
 }
 
 
@@ -171,10 +166,10 @@ double multVec(vector<double> const& a, vector<double> const& b) {
 }
 
 
-vector<double> calcMahalanobis(vector<double> const& feature, vector<vector<double>> const& avarages, vector<Eigen> const& eigens) {
+void calcMahalanobis(vector<double> const& feature, vector<vector<double>> const& avarages, vector<Eigen> const& eigens, double bias, vector<double>& results) {
     int char_num = eigens.size();
-    vector<double> results(
-        char_num,
+    vector<double> sub_tmp(
+        feature.size(),
         0
     );
 
@@ -182,17 +177,16 @@ vector<double> calcMahalanobis(vector<double> const& feature, vector<vector<doub
     for(int i = 0; i < char_num; i++) {
         values_num = eigens[i].values.size();
         for(int j = 0; j < values_num; j++) {
+            subVector(feature, avarages[i], sub_tmp);
             results[i] += pow(
                 multVec(
-                    subVector(feature, avarages[i]),
+                    sub_tmp,
                     eigens[i].vectors[j]
                 ),
                 2.0
-            ) / (eigens[i].values[j] + BIAS);
+            ) / (eigens[i].values[j] + bias);
         }
     }
-
-    return results;
 }
 
 
@@ -218,6 +212,11 @@ int main() {
 
     cout << "file loading completed" << endl << endl;
 
+    int bias = 1000;
+    vector<double> results(
+        CHAR_NUM,
+        0
+    );
     int result;
     int total_correct = 0;
     int total = 0;
@@ -240,7 +239,9 @@ int main() {
         local = 0;
         local_correct = 0;
         for(int j = 0; j < tests[i].size(); j++) {
-            result = getMaxIndex(calcMahalanobis(tests[i][j], avarages, eigens));
+            calcMahalanobis(tests[i][j], avarages, eigens, bias, results);
+            result = getMaxIndex(results);
+
             if(result == i) {
                 local_correct++;
                 total_correct++;
@@ -249,8 +250,8 @@ int main() {
             total++;
         }
         cout << "「" << hiragana[i] << "」: ";
-        cout << local_correct << "/" << local << "(" << local_correct/local*100 << "%)" << endl;
+        cout << local_correct << "/" << local << "(" << (1.0*local_correct)/(1.0*local)*100 << "%)" << endl;
     }
     cout << "total result: ";
-    cout << total_correct << "/" << total << "(" << total_correct/total*100 << "%)" << endl;
+    cout << total_correct << "/" << total << "(" << (1.0*total_correct)/(1.0*total)*100 << "%)" << endl;
 }
