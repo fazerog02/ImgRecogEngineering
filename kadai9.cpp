@@ -167,6 +167,7 @@ double multVec(vector<double> const& a, vector<double> const& b) {
 
 
 void calcMahalanobis(vector<double> const& feature, vector<vector<double>> const& avarages, vector<Eigen> const& eigens, double bias, vector<double>& results) {
+    for(int i = 0; i < results.size(); i++) results[i] = 0;
     int char_num = eigens.size();
     vector<double> sub_tmp(
         feature.size(),
@@ -190,10 +191,10 @@ void calcMahalanobis(vector<double> const& feature, vector<vector<double>> const
 }
 
 
-int getMaxIndex(vector<double> const& vec) {
+int getMinIndex(vector<double> const& vec) {
     int ans = 0;
     for(int i = 1; i < vec.size(); i++) {
-        if(vec[ans] < vec[i]) ans = i;
+        if(vec[ans] > vec[i]) ans = i;
     }
 
     return ans;
@@ -212,7 +213,7 @@ int main() {
 
     cout << "file loading completed" << endl << endl;
 
-    int bias = 1000;
+    int bias = 500;
     vector<double> results(
         CHAR_NUM,
         0
@@ -240,7 +241,7 @@ int main() {
         local_correct = 0;
         for(int j = 0; j < tests[i].size(); j++) {
             calcMahalanobis(tests[i][j], avarages, eigens, bias, results);
-            result = getMaxIndex(results);
+            result = getMinIndex(results);
 
             if(result == i) {
                 local_correct++;
